@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scraper-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: scraper
+  template:
+    metadata:
+      labels:
+        app: scraper
+    spec:
+      containers:
+        - name: scraper
+          image: my-scraper:latest  # ✅ Make sure this matches your local image
+          imagePullPolicy: Never  # ✅ Prevents Kubernetes from trying to pull it
+          command: ["node", "dist/main.js"]
