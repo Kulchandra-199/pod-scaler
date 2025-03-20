@@ -1,0 +1,16 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: scraper-scaler
+spec:
+  scaleTargetRef:
+    name: scraper-deployment
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  pollingInterval: 5  # Check every 5 seconds
+  cooldownPeriod: 30
+  triggers:
+    - type: http
+      metadata:
+        url: "http://queue-metrics.default.svc.cluster.local:3000/queue-length"
+        value: "5"  # Scale up if more than 10 jobs in queue

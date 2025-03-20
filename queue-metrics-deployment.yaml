@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue-metrics
+  template:
+    metadata:
+      labels:
+        app: queue-metrics
+    spec:
+      containers:
+        - name: queue-metrics
+          image: my-queue-metrics:latest
+          ports:
+            - containerPort: 3000
